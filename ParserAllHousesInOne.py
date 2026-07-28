@@ -18,6 +18,14 @@ from dotenv import load_dotenv
 
 load_dotenv()
 
+COOKIES_FILE = "cookies.json"
+
+def load_cookies() -> dict:
+    if os.path.exists(COOKIES_FILE):
+        with open(COOKIES_FILE) as f:
+            return json.load(f)
+    return {}
+
 # pip install requests telebot time datetime csv locale
 #print('-----Старт-----')
 
@@ -25,45 +33,7 @@ load_dotenv()
 def take_all_posts_idealista():
 
 
-       # 'if-none-match': 'W/"caa9cdacdabd723607e1acd282450146"',
-
-    cookies = {
-        'userUUID': 'f070439a-727a-4f56-a510-f121eb395c45',
-        '_pprv': 'eyJjb25zZW50Ijp7IjAiOnsibW9kZSI6Im9wdC1pbiJ9LCIxIjp7Im1vZGUiOiJvcHQtaW4ifSwiMiI6eyJtb2RlIjoib3B0LWluIn0sIjMiOnsibW9kZSI6Im9wdC1pbiJ9LCI0Ijp7Im1vZGUiOiJvcHQtaW4ifSwiNSI6eyJtb2RlIjoib3B0LWluIn0sIjYiOnsibW9kZSI6Im9wdC1pbiJ9LCI3Ijp7Im1vZGUiOiJvcHQtaW4ifX0sInB1cnBvc2VzIjpudWxsLCJfdCI6Im1rb2xkdGF0fG01MDZnYnl0In0%3D',
-        '_pcid': '%7B%22browserId%22%3A%22m506gbyrtelt8kxp%22%2C%22_t%22%3A%22mkoldtgg%7Cm506gc4g%22%7D',
-        '_pctx': '%7Bu%7DN4IgrgzgpgThIC4B2YA2qA05owMoBcBDfSREQpAeyRCwgEt8oBJAE0RXSwH18yBbANaVUrfAHN6AH34BWAAwA2cQGMALPRABfIA',
-        '_fbp': 'fb.1.1734906361705.18678112912941123',
-        '_tt_enable_cookie': '1',
-        '_ttp': 'ZiNFls9B2vO53LO3EioAu9VT3XC.tt.1',
-        '_gcl_au': '1.1.349859911.1734906380',
-        '_last_search': 'interestZone',
-        'askToSaveAlertPopUp': 'true',
-        'sendbba8248e-a1b5-4184-9292-5c2610c8e4f7': '"{}"',
-        'ABTasty': 'uid=ksk23ckb56sac7n7',
-        'utag_main__prevCompleteClickName': '',
-        '_clck': '1klp4yb%7C2%7Cfsw%7C0%7C1817',
-        'contactdd163d74-a5f3-4206-a97a-363e3d1a902b': '"{\'maxNumberContactsAllow\':10}"',
-        'SESSION': os.getenv('IDEALISTA_SESSION', '5a39a92ce6e23c79~dd163d74-a5f3-4206-a97a-363e3d1a902b'),
-        'utag_main__sn': '4',
-        'utag_main_ses_id': '1737910558444%3Bexp-session',
-        'utag_main__prevTstitle': 'https%3A%2F%2Fwww.idealista.com%2Fru%2Fgeo%2Falquiler-viviendas%2Fcataluna%2Fcon-precio-hasta_850%2Cde-un-dormitorio%2Cde-dos-dormitorios%2Cde-tres-dormitorios%2Cde-cuatro-cinco-habitaciones-o-mas%2Cascensor%2Cbalcon-y-terraza%2Cpublicado_ultimas-24-horas%2Calquiler-de-larga-temporada%2F%3Fordenado-por%3Dfecha-publicacion-desc%3Bexp-1737914158620',
-        'utag_main__prevTsReferrer': '%3Bexp-1737914158620',
-        'utag_main__prevTsSource': 'Direct traffic%3Bexp-1737914158620',
-        'utag_main__prevTsCampaign': 'organicTrafficByTm%3Bexp-1737914158620',
-        'utag_main__prevTsProvider': '%3Bexp-1737914158620',
-        'utag_main__ss': '0%3Bexp-session',
-        'dicbo_id': '%7B%22dicbo_fetch%22%3A1737910564060%7D',
-        'cookieSearch-1': '"/geo/alquiler-viviendas/cataluna/con-precio-hasta_850,de-un-dormitorio,de-dos-dormitorios,de-tres-dormitorios,de-cuatro-cinco-habitaciones-o-mas,ascensor,balcon-y-terraza,publicado_ultimas-24-horas,alquiler-de-larga-temporada/:1737910796210"',
-        'utag_main__pn': '3%3Bexp-session',
-        'utag_main__se': '4%3Bexp-session',
-        'utag_main__st': '1737912599909%3Bexp-session',
-        'utag_main__prevCompletePageName': '005-idealista/portal > portal > viewResults%3Bexp-1737914400655',
-        'utag_main__prevLevel2': '005-idealista/portal%3Bexp-1737914400655',
-        '_uetsid': '78654930db6811ef9c2bafdc76f37f47',
-        '_uetvid': '24831d70e4b611eebe4f7b46cfe223f5',
-        'datadome': os.getenv('IDEALISTA_DATADOME', 'SpLzEuEG5rpGbFaeOhXBh8dKWuEB65LFxVUN6zzlvSt7VDOleZALVOnuHZXEKDB~n1gY36au0Bs442pmcNnvbPM8SQ9OYBvQkBa6LUnkOlrf69suAWRgDJKKkouH~0Hy'),
-        '_clsk': 'nru3nf%7C1737910804656%7C5%7C0%7Cu.clarity.ms%2Fcollect',
-    }
+    cookies = load_cookies().get("idealista", {}).get("cookies", {})
 
     headers = {
         'accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.7',
@@ -343,12 +313,13 @@ def start_idealista():
 def take_all_posts_badi():
 
 
+    badi_headers = load_cookies().get("badi", {}).get("headers", {})
     headers = {
         'accept': 'application/json',
         'accept-language': 'es-ES',
         'authorization': f'Bearer {os.getenv("BADI_BEARER_TOKEN")}',
         'badi-app-version': '5.123.6',
-        'badi-device-id': 'f003c23c-c266-4961-a233-ed833c77506b',
+        'badi-device-id': badi_headers.get("badi-device-id", ""),
         'badi-favourite-language': 'ru-RU, ru, en-US, en',
         'badi-inner-window-size': '428x904',
         'badi-language': 'es-ES',
@@ -986,27 +957,7 @@ def take_all_posts_pisocompartido():
     
     import requests
 
-    cookies = {
-        'PHPSESSID': os.getenv('PISO_PHPSESSID', '3662962036a43b6405ee8c931cfaa675'),
-        'piso_lang': 'es',
-        'AMCVS_9854C13E58403FEB0A495D53%40AdobeOrg': '1',
-        '_ga': 'GA1.1.1371456446.1739154764',
-        '_clck': '1bj6qqg%7C2%7Cftb%7C0%7C1867',
-        's_ecid': 'MCMID%7C13408647863159457050490538892132299535',
-        's_cc': 'true',
-        'AMCV_9854C13E58403FEB0A495D53%40AdobeOrg': '179643557%7CMCIDTS%7C20130%7CMCMID%7C13408647863159457050490538892132299535%7CMCAAMLH-1739759563%7C6%7CMCAAMB-1739759563%7CRKhpRz8krg2tLO6pguXWp5olkAcUniQYPHaMWWgdJ3xzPWQmdj0y%7CMCOPTOUT-1739161964s%7CNONE%7CMCAID%7CNONE%7CMCSYNCSOP%7C411-20137%7CvVersion%7C5.5.0',
-        'G_ENABLED_IDPS': 'google',
-        'didomi_token': 'eyJ1c2VyX2lkIjoiMTk0ZWRiM2EtNjdlYy02ODg5LWEyNTAtNDFlYTdiYjRiZDVjIiwiY3JlYXRlZCI6IjIwMjUtMDItMTBUMDI6MzI6NDEuMzQyWiIsInVwZGF0ZWQiOiIyMDI1LTAyLTEwVDAyOjMyOjQ3LjI3MFoiLCJ2ZW5kb3JzIjp7ImVuYWJsZWQiOlsiZ29vZ2xlIiwiYW1hem9uIiwidHdpdHRlciIsImM6aW5kaWdpdGFsbC1QM0Y0aWZXNCIsImM6dmlkZW9sb2d5IiwiYzpnb29nbGVhbmEtNFRYbkppZ1IiLCJjOnBlbmR1bGFyLU1mZ2tCZEFlIl19LCJwdXJwb3NlcyI6eyJlbmFibGVkIjpbImdlb2xvY2F0aW9uX2RhdGEiLCJkZXZpY2VfY2hhcmFjdGVyaXN0aWNzIl19LCJ2ZW5kb3JzX2xpIjp7ImVuYWJsZWQiOlsiZ29vZ2xlIl19LCJ2ZXJzaW9uIjoyLCJhYyI6IkRPdUJBQUVZQUxJQWJBQmlBR0tBUE1BOVVDSWdFU1FJcGdTaUFtY0JhQURDd0dNQU02Z2NTQTVRQ0JnRWhnSnpnVm5ndEdCYVNDNTBGMVFNT0lZbkJpZURHNEdPSU0zQVoxZ0EuRE91QkFBRVlBTElBYkFCaUFHS0FQTUE5VUNJZ0VTUUlwZ1NpQW1jQmFBREN3R01BTTZnY1NBNVFDQmdFaGdKemdWbmd0R0JhU0M1MEYxUU1PSVluQmllREc0R09JTTNBWjFnQSJ9',
-        'euconsent-v2': 'CQMnI8AQMnI8AAHABBENBbFsAP_gAEPgAAiQJkNX_G__bWlr8X73aftkeY1P99h77sQxBhbJE-4FzLvW_JwXx2E5NAz6tqIKmRIAu3TBIQNlHJDURVCgaogVrSDMaEyUoTNKJ6BkiFMRI2dYCFxvm4tjeQCY5vr991dx2B-t7dr83dzyy4hHn3a5_2S0WJCdA4-tDev9bROb-9IOd_x8v4v4_F7pE2_eT1l_tWvp7D9-cts_9XQTFAJMNCogDLAkJCDQMIIEAKgrCAigQBAAAkDRAQAmDAp2BgAusJEAIAUAAwQAgABBkACAAACABCIAIACgQAAQCBQABgAQCAQAEDAACACwEAgABAdAxTAggECwASMyKhTAhAASCAlsqEEgCBBXCEIs8AiAREwUAAAAABSAAICwWBxJICVCQQBcQTQAAEACAQQAFCCTkwABAGbLUAAA.f_wACHwAAAAA',
-        'sui_1pc': '17391547673241A7847DBB545F93D1D7056A26552ADFAF84B3CFEBC8',
-        'Y3djb25zZW50': '1',
-        '_clsk': '1ij0s4h%7C1739155358908%7C3%7C1%7Cv.clarity.ms%2Fcollect',
-        's_nr': '1739155367747-New',
-        's_ppn': 'piso%3A1148286%3Apisos-en-carrer-esteve-terrades-granollers-por-796%E2%82%AC-al-mes',
-        '_ga_HLGVJV0DKB': 'GS1.1.1739154763.1.1.1739155368.0.0.0',
-        's_ppvl': 'piso%253A1148286%253Apisos-en-carrer-esteve-terrades-granollers-por-796%25u20AC-al-mes%2C27%2C27%2C941%2C1680%2C904%2C1680%2C1050%2C2%2CP',
-        's_ppv': 'pisos-barcelona%253Ahasta-850%253Ahabitaciones-2%253Aalquiler-de-pisos-en-barcelona%2C35%2C35%2C904%2C428%2C904%2C1680%2C1050%2C2%2CL',
-    }
+    cookies = load_cookies().get("pisocompartido", {}).get("cookies", {})
 
     headers = {
         'accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.7',
