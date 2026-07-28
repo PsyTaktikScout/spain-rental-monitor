@@ -19,8 +19,7 @@ Python 3.10+ · requests · BeautifulSoup · pyTelegramBotAPI
 ```bash
 pip install -r requirements.txt
 cp .env.example .env
-cp cookies.json.example cookies.json
-# fill in your Telegram bot token, chat ID, and cookies
+# fill in your Telegram bot token and chat ID
 python ParserAllHousesInOne.py
 ```
 
