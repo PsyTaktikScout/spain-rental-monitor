@@ -5,7 +5,7 @@ A Python-based notification service that monitors Spanish rental property portal
 ## Features
 
 - Polls 4 property portals every ~3 minutes
-- Filters by price (≤850 EUR), rooms, balcony/terrace, publication date
+- Filters by price, rooms, balcony/terrace, publication date
 - Deduplicates listings across cycles via CSV snapshots
 - Sends Telegram notifications with property details and Google Maps links
 - Self-healing — recreates state files on corruption, logs errors to Telegram
